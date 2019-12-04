@@ -1,3 +1,1 @@
-<?php
-    echo "Test GitHub Test22222222233333333333333333";
-?>
+mysqldump --socket=/tmp/mysql.sock -uuser_nssys -pA\^Z\&nqK\+\#\:\!\{q\%Jy vio_wallet_data > vio_wallet_data_LHN.sql
