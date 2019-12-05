@@ -37,3 +37,4 @@ CentOS7
 
 https://sarc.io/index.php/httpd/1120-apache-https-http-redirect-rewrite
 아파치 mod_rewrite 참고
+   aaaa
