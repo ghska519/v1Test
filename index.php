@@ -37,4 +37,29 @@ CentOS7
 
 https://sarc.io/index.php/httpd/1120-apache-https-http-redirect-rewrite
 아파치 mod_rewrite 참고
-   aaaa
+
+ CentOs 버전확인
+ cat /etc/redhat-release
+
+linux 서버 ssh 에서 root 비밀번호 변경하기
+# su
+# passwd
+이후 비밀번호 입력
+
+CentOS6 mysql 원격접속 허용
+    모든 IP 허용
+        GRANT ALL PRIVILEGES ON *.*TO'아이디'@'%'identified by '패스워드';
+    아이피대역 허용(192.168.1로시작되는 대역)
+        GRANT ALL PRIVILEGES ON *.*TO'아이디'@'192.168.1.%'identified by '패스워드';
+    특정 IP 한개만 허용
+        GRANT ALL PRIVILEGES ON *.*TO'아이디'@'192.168.1.123'identified by '패스워드';
+    원격접속 허용전으로 되돌리기
+        DELETE FROM mytsql.user where host='%' and user='root';
+수정후
+    flush privileges;
+
+원격접속하기
+    mysql -h'원격서버의ip 또는 도메인' -u'원격접속이 허둉된 사용자이름' -p
+
+
+    https://codeday.me/ko/qa/20190307/14984.html

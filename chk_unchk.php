@@ -16,7 +16,7 @@ $(document).ready(function(){
             $(".argee_chk").prop('checked',true);
         }else{
             $(".argee_chk").prop('checked',false);
-        }
+        }   
     });
     $(".argee_chk").click(function(){
         chkCnt = $(".argee_chk").length;
