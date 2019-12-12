@@ -63,3 +63,10 @@ CentOS6 mysql 원격접속 허용
 
 
     https://codeday.me/ko/qa/20190307/14984.html
+
+php.ini 파일을 열고 error_reporting 부분을 찾아보면 아래와 같이 되어있는 경우가 많습니다.
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+E_ALL은 모든 에러에 대하여 출력한다는 뜻입니다
+E_DEPRECATED 는 특정기능/함수가 앞으로는 지원되지 않을 수 있는 경우 표시됩니다.
+해당 문자열 앞에 ~가 붙으면 해당 오류는 출력하지 않는다는 뜻입니다
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
