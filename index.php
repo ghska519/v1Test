@@ -70,3 +70,7 @@ E_ALL은 모든 에러에 대하여 출력한다는 뜻입니다
 E_DEPRECATED 는 특정기능/함수가 앞으로는 지원되지 않을 수 있는 경우 표시됩니다.
 해당 문자열 앞에 ~가 붙으면 해당 오류는 출력하지 않는다는 뜻입니다
 error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
+
+
+https://exercism.io/my/tracks   배우는곳
+https://poiemaweb.com/  배우는곳
