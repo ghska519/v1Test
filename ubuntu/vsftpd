@@ -1,0 +1,63 @@
+1. vsftp 설치
+#apt-get install vsftpd
+(삭제 : #apt-get remove vsftpd)
+
+2. vsftpd.conf 파일 수정
+#nano /etc/vsftpd.conf
+write_enable앞 #주석제거
+write_enable=yes
+
+local_umask = 002 로수정
+
+(chroot_local_user=YES 주석 풀면 자신의 홈 디렉토리만 접근가능)
+*chroot_local_user=YES 주석을 풀면 아래와 같은 에러가 발생하는 경우가 있음
+500 OOPS: vsftpd: refusing to run with writable root inside chroot()
+이러한 경우 vsftpd.conf 파일에
+allow_writeable_chroot=YES  을 추가 저장
+*aws를 사용하는 경우 vsftpd.conf 파일에 아래내용 추가
+pasv_enable=YES
+pasv_min_port=1024
+pasv_max_port=1048
+pasv_address=자신의 ip
+
+3.vsftpd 재시작
+#service vsftpd restart
+*접근 제한 사용자 리스트*
+
+#vi /etc/ftpusers
+ ftpusers안에 있는 사용자는 ftp접속이 제한된다.
+(root계정을 사용하고싶으면 파일안에 root를 삭제하고 저장)
+
+
+*FTP 접속 디렉토리 변경*
+#usermod -d /home/ 유저아이디
+ex)usermod -d /home/ftp/ root
+
+*FTP 계정 생성*
+
+#adduser 유저아이디
+#passwd 유저아이디
+*ftp 기본 권한 설정
+#vi /etc/vsftpd.conf
+local_umask = 022
+위와 같은 부분의 주석 풀기
+
+
+
+(022가 기본으로 설정 되어있음)
+
+
+
+폴더는 777 - 022 = 775
+
+파일은 666 - 022 = 644
+
+
+
+local_umask의 숫자를 변경하여
+
+기본 권한을 변경해 준다.
+
+
+
+출처: https://nahosung.tistory.com/40 [nahos]
