@@ -1,0 +1,40 @@
+Ubuntu VirtualHost 설정하기
+
+    sample.com 이라는 도메인을 새로 연결하려고 한다
+
+
+    apache2 DocumentRoot 에 실행
+
+    1.새도메인의 실행폴더 생성
+        mkdir /var/www/sample.com/public_html
+
+    2.새로생성한 폴더 권한설정
+        sudo chmod -R 755 /var/www/sample.com/public_html
+
+    3.conf 파일생성
+         /etc/apache2/sites-available하우에 잇는 000-default.conf 를 복사해서 새로운 파일을 생생성
+         /etc/apache2/sites-available/sample-custom.conf
+    4.sample-custom.conf 내용수정
+        <VirtualHost *:80>
+            ServerName sample.com
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/sample.com/public_html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+            <Directory /home/wicked/receive>
+                #Options 지시자는 지정한 디렉토리 이하에 모든 파일과 디렉토리들에 적용할 접근제어를 설정한다.
+                Options  MultiViews
+                #AllowOverride 지시자는 어떻게 접근을 허락할 것인가에 대한 설정한다.
+                AllowOverride All
+                #Require 지시자는 서버의 특정 영역에 접근할 수 있는 사용자를 지정하여 권한을 부여한다.
+                Require all granted
+            </Directory>
+        </VirtualHost>
+        #Directory 에 관한 설정 http://magic.wickedmiso.com/132참고
+
+    5. /etc/apache2/sites-enaabled/ 경로에 설정한 파일의 심볼릭 링크를 생성해 준다.
+        sudo ln -s /etc/apache2/sites-available/sample-custom.conf /etc/apache2/sites-enabled/sample-custom.conf
+        ls /etc/apache2/sites-enabled/ -al
+
+    6.아파치 재시작
+        service apache2 restart
