@@ -1,4 +1,4 @@
-<h1 style="font-weight:bold;color:red">MySQL</h1>
+MySQL
     root 비밀번호 변경
 
         1.mysql 접근
