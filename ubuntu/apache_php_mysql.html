@@ -1,0 +1,105 @@
+Ubuntu 18.04 Setting LAMP (Linux,Apache,MySQL,PHP)
+
+버전확인 : lsb_release -a
+
+패키지 설치를 시작하기 전에 저장소의 패키지 목록을 업데이트하고 기존에 설치되어 있던 패키지를 업그레이드 해줍니다.
+
+sudo apt update && sudo apt upgrade
+
+        sudo apt update                  ----->저장소의 패키지 목록을 업데이트
+        sudo apt upgrade                ----->기존에 설치되어 있던 패키지를 업그레이드
+
+1. Apache2 웹서버 설치
+
+1-1. Apache2 웹서버 패키지를 설치합니다.
+
+    $ sudo apt install apache2        ---->Y를 누르고 엔터 설치진행
+                                                    설치완료후 웹브라우저에 localhost 확인
+
+1-2. Apache2의 디폴트 Document Root는 /var/www/html 입니다.
+
+                    /etc/apache2/apache2.conf 파일을 수정하면 디폴트 Document Root를 수정할 수 있습니다.
+                    변경할 디렉토리의 퍼미션과 소유자 지정 등이 추가로 필요합니다.
+
+1-3. 방어벽 프로그램 ufw를 활성화 합니다. (테스트 목적이라면 꼭 할 필요없습니다.)
+
+    $ sudo ufw enable
+        방화벽이 활성 상태이며 시스템이 시작할 때 사용됩니다
+
+    방어벽 기본 설정을 변경합니다.
+        webnautes@webnautes-pc:~$ sudo ufw default deny incoming
+        기본 incoming 정책이 'deny'로 바뀌었습니다
+        (당신의 규칙에 따라 업데이트를 하시는 걸 명심하십시오)
+
+
+        webnautes@webnautes-pc:~$ sudo ufw default allow outgoing
+        기본 outgoing 정책이 'allow'로 바뀌었습니다
+        (당신의 규칙에 따라 업데이트를 하시는 걸 명심하십시오)
+
+    SSH 접속을 허용합니다.
+        webnautes@webnautes-pc:~$ sudo ufw allow ssh
+        규칙이 추가되었습니다
+        규칙이 추가되었습니다 (v6)
+
+    웹서버에서 사용할 포트 80(HTTP), 443(HTTPS)에 따라 다음 세가지 중 하나를 선택합니다.
+        webnautes@webnautes-pc:~$ sudo ufw app info "Apache"
+        프로필: Apache
+        제목: Web Server
+        설명: Apache v2 is the next generation of the omnipresent Apache web server.
+
+        포트:
+        80/tcp
+
+        webnautes@webnautes-pc:~$ sudo ufw app info "Apache Secure"
+        프로필: Apache Secure
+        제목: Web Server (HTTPS)
+        설명: Apache v2 is the next generation of the omnipresent Apache web server.
+
+        포트:
+        443/tcp
+
+        webnautes@webnautes-pc:~$ sudo ufw app info "Apache Full"
+        프로필: Apache Full
+        제목: Web Server (HTTP,HTTPS)
+        설명: Apache v2 is the next generation of the omnipresent Apache web server.
+
+        포트:
+        80,443/tcp
+    선택한 프로필을 방어벽에 적용합니다.
+        webnautes@webnautes-pc:~$ sudo ufw allow in "Apache Full"
+        규칙이 추가되었습니다
+        규칙이 추가되었습니다 (v6)
+
+    현재 방어벽 정책은 다음처럼 확인할 수 있습니다.
+        webnautes@webnautes-pc:~$ sudo ufw status numbered
+        상태: 활성
+
+         목적                         동작          출발
+         --                         --          --
+        [ 1] 22/tcp                     ALLOW IN    Anywhere
+        [ 2] Apache Full                ALLOW IN    Anywhere
+        [ 3] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
+        [ 4] Apache Full (v6)           ALLOW IN    Anywhere (v6)
+
+2. MySQL 서버 설치
+
+    2-1. MySQL 서버 패키지를 설치합니다.
+        $ sudo apt install mysql-server
+        [mysql 기본 설정및조작 mysql_default_set 참고]
+
+3. PHP 설치
+    3-1. php 패키지를 설치합니다.
+        $ sudo apt install php php-mysql
+        [php  기본 설정및조작 php_default_set 참고]
+
+4. phpMyAdmin 설치(옵션)
+    4-1. phpmyadmin 패키지를 설치합니다.
+        $ sudo apt install phpmyadmin
+        설치중 암호입력부분 설정 확인후 암호 재확인
+    4-2. Not Found해결
+        /etc/apache2/apache2.conf 파일을 열어서 마지막에 다음줄을 추가합니다.
+
+        Include /etc/phpmyadmin/apache.conf
+        
+        변경된 설정을 적용하기 위해서 다음처럼 아파치 서버를 재시작합니다.
+        $ /etc/init.d/apache2 restart
