@@ -1,4 +1,4 @@
-MySQL
+<h1>MySQL</h1>
     root 비밀번호 변경
 
         1.mysql 접근
@@ -39,5 +39,5 @@ MySQL
 
         6.유저삭제
             drop user 유저아이디@'%';
-            
+
         flush privileges;     // 변경된 내용을 메모리에 반영(권한 적용)
