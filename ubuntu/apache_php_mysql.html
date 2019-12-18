@@ -100,6 +100,12 @@ sudo apt update && sudo apt upgrade
         /etc/apache2/apache2.conf 파일을 열어서 마지막에 다음줄을 추가합니다.
 
         Include /etc/phpmyadmin/apache.conf
-        
+
         변경된 설정을 적용하기 위해서 다음처럼 아파치 서버를 재시작합니다.
         $ /etc/init.d/apache2 restart
+
+        phpmyadmin에러
+            Warning in ./libraries/sql.lib.php#613
+            count(): Parameter must be an array or an object that implements Countable
+            /usr/share/phpmyadmin/libraries/sql.lib.php
+            || (count(＄analyzed_sql_results['select_expr']) == 1해당결로를 찾아서 요부분 수정
