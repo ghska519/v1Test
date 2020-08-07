@@ -1,0 +1,32 @@
+apt-get install apache2
+apt-get install mysql-server
+add-apt-repository ppa:ondrej/php 
+apt-get update
+apt-get install php5.6 php5.6-common
+apt-get install php5.6-mysql php5.6-curl php5.6-xml php5.6-zip php5.6-gd php5.6-mbstring php5.6-mcrypt php5.6-redis
+apt-get update
+apt-get upgrade
+systemctl enable apache2.service (autostart 등록)
+systemctl enable mysql.service (autostart 등록)
+
+
+apt-get install redis-server
+vmstat -s (총메모리 사이즈 확인)
+/etc/redis/redis.conf --> 파일내용중 maxmemory: redis(최대메모리지정), maxmemory-policy allkeys-lru (메모리초과시 대응방법:오래된 기존메모리부터 삭제)
+systemctl enable redis-server.service (autostart 등록)
+
+//mysql root 비밀번호 설정
+
+
+mysql -u root -p (엔터엔터 후 접속)
+아래 명령어로 root의 인증모드를 보고, auth_socket 이라면, 이를 변경해준다
+SELECT user,plugin,host FROM mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+FLUSH PRIVILEGES;
+
+phpMyAdmin 설치
+apt-get install phpmyadmin
+/etc/apache2/apache2.conf 파일을 열어서 마지막에 다음줄을 추가합니다.
+Include /etc/phpmyadmin/apache.conf
+변경된 설정을 적용하기 위해서 다음처럼 아파치 서버를 재시작합니다.
+$ /etc/init.d/apache2 restart
