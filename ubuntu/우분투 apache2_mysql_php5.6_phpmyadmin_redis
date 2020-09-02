@@ -6,6 +6,7 @@ apt-get install php5.6 php5.6-common
 apt-get install php5.6-mysql php5.6-curl php5.6-xml php5.6-zip php5.6-gd php5.6-mbstring php5.6-mcrypt php5.6-redis
 apt-get update
 apt-get upgrade
+a2enmod rewrite //  mod_rewrite 활성화
 systemctl enable apache2.service (autostart 등록)
 systemctl enable mysql.service (autostart 등록)
 
