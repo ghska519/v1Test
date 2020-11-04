@@ -1,4 +1,4 @@
-https://www.lesstif.com/pages/viewpage.action?pageId=17105804 차고
+https://www.lesstif.com/pages/viewpage.action?pageId=17105804 차고   对对对11
 데타베스 백업
     mysqldump --socket=/tmp/mysql.sock -u아이디 -p비번 vio_wallet_data > test.sql
 데이터 업로그
@@ -74,4 +74,4 @@ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
 
 https://exercism.io/my/tracks   배우는곳
 https://poiemaweb.com/  배우는곳
-http://redocn.com 
+http://redocn.com
