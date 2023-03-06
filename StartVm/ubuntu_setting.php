@@ -18,3 +18,11 @@
         allow_writeable_chroot=YES  을 추가 저장
     완료후 vsftp 재시작
     systemctl restart vsftpd
+    여기까지면 ftp는 접속이 가능해진다
+    ssh 설치
+    apt-get install openssh_server
+    root 접속제한 해제
+    nano /etc/ssh/sshd_config
+    #PermitRootLogin prohibit-password 를 PermitRootLogin yes 변경
+    #PasswordAuthentication yes 앞에 #주석 제거
+    service ssh restart
