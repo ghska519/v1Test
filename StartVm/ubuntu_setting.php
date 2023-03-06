@@ -1,0 +1,20 @@
+1.ubuntu 까지 설치 완료후 이유는 모르겠지만 일단 업데이트
+    sudo apt update                  ----->저장소의 패키지 목록을 업데이트
+    sudo apt upgrade                ----->기존에 설치되어 있던 패키지를 업그레이드
+2.ssh 설정
+    우선 root 계정을 활성화 한다
+    sudo passwd root
+    입력후 비밀번호 두번 입력
+    su root
+    비밀번호 입력후 접속 되면 활성화 된거임
+    nano /etc/ftpusers
+    파일 열린후 맨위에 root 를 삭제후
+    nano /etc/vsftpd.conf
+    파일에서 #write_enable=YES  앞 주석을 제거
+    (chroot_local_user=YES 주석 풀면 자신의 홈 디렉토리만 접근가능)
+        *chroot_local_user=YES 주석을 풀면 아래와 같은 에러가 발생하는 경우가 있음
+        500 OOPS: vsftpd: refusing to run with writable root inside chroot()
+        이러한 경우 vsftpd.conf 파일에
+        allow_writeable_chroot=YES  을 추가 저장
+    완료후 vsftp 재시작
+    systemctl restart vsftpd
