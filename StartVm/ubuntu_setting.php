@@ -26,3 +26,15 @@
     #PermitRootLogin prohibit-password 를 PermitRootLogin yes 변경
     #PasswordAuthentication yes 앞에 #주석 제거
     service ssh restart
+
+
+    git 설치
+    apt-get install git
+    버전확인
+    git --version
+    push했을때 올라갈 내정보 입력
+    git config --global user.name LHN
+    git config --global user.mail ghska519@163.com
+
+    라이트 코인 쏘스 다운로드
+    git clone https://github.com/litecoin-project/litecoin.git
