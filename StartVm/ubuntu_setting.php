@@ -117,3 +117,8 @@
     bitcoind -testnet -daemon (백그라운드에서 진행)
     실행하면 거래내역을 내려받는걸 확인할수 있다
     bitcoin-cli -testnet getblockcount (현재 내피시에 쌓인 높이를 알수 있다)
+
+    대략 한두시간이후 높이가 같아진후
+
+    bitcoin-cli -testnet getnewaddress hnts01 지갑주소를 상성하고
+    구글 bitcoin testnet coin faucet  검색후 테스트 코인을 받아온다
