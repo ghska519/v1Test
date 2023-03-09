@@ -38,3 +38,5 @@
 
     라이트 코인 쏘스 다운로드
     git clone https://github.com/litecoin-project/litecoin.git
+
+    1
