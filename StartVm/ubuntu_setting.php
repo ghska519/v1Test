@@ -8,6 +8,7 @@
     sudo passwd root
     입력후 비밀번호 두번 입력
     su root
+    sudo apt-get install vsftpd
     비밀번호 입력후 접속 되면 활성화 된거임
     nano /etc/ftpusers
     파일 열린후 맨위에 root 를 삭제후
@@ -117,8 +118,32 @@
     bitcoind -testnet -daemon (백그라운드에서 진행)
     실행하면 거래내역을 내려받는걸 확인할수 있다
     bitcoin-cli -testnet getblockcount (현재 내피시에 쌓인 높이를 알수 있다)
-
+    ps -ef | grep bitcoin
     대략 한두시간이후 높이가 같아진후
 
     bitcoin-cli -testnet getnewaddress hnts01 지갑주소를 상성하고
     구글 bitcoin testnet coin faucet  검색후 테스트 코인을 받아온다
+
+    코인보내기 sendtoaddress 받는사람 주소 코인 수량 ====> 리턴 txID
+    bitcoin-cli -testnet sendtoaddress tb1qnlvdg2sjerwj6c46akd5x5rkkeu0eclau768pu 0.0001
+
+
+
+    라이트 코인 0.15 빌드 하기
+    mkdir workspace && cd workspace
+
+    git clone -b 0.15 --single-branch https://github.com/litecoin-project/litecoin.git ingcoin_0.0.15
+    cd ingcoin_0.0.15
+    sudo apt update
+    sudo apt upgrade
+    sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+    sudo apt install nsis
+
+    sudo apt install g++-mingw-w64-x86-64 sudo update-alternatives --config x86_64-w64-mingw32-g++
+    1을 입력하고 엔터
+    sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libboost-iostreams-dev
+    sudo apt-get install libssl-dev
+    모듈들을 다운로드 후
+    ./autogen.sh
+    ./configure --with-boost-libdir=/usr/lib/x86_64-linux-gnu
+    sudo make
