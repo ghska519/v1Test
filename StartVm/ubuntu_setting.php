@@ -147,3 +147,15 @@
     ./autogen.sh
     ./configure --with-boost-libdir=/usr/lib/x86_64-linux-gnu
     sudo make
+    sudo make install
+
+    참고 링크 https://bitcointalk.org/index.php?topic=4763421.0
+    라이트 코인 콘피그 파일을 연다
+    nano /home/유저/.litecoin/litecoin.conf
+    rpcuser=ltcuser
+    rpcpassword=ltcpassword
+    rpcallowip=127.0.0.1
+    listen=1
+    server=1
+    daemon=1
+    maxconnections=24  //차차 알아보고 설정하자
