@@ -1,0 +1,117 @@
+sudo apt-get install curl
+sudo apt-get install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+===== litecoin git clone =====
+cd ~  루트폴더로 이동
+mkdir workspace  폴더를 하나 만들어 줍니다. 이름은 적당히 지어주시면 됩니다.
+
+cd workspace 만들어준 폴더로 이동하고
+
+git clone -b 0.15 --single-branch https://github.com/litecoin-project/litecoin.git Aguhcoin_0.0.15
+
+라이트 코인 0.15 버전으로 만들겠습니다.
+
+github주소 다음에 Aguhcoin_0.0.15 는 제가 만들 코인의 이름으로 지어줬습니다.
+
+cd Aguhcoin_0.0.15  git clone 한 폴더로 이동한 다음에
+sudo apt-get update
+sudo apt upgrade
+sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+sudo apt install nsis
+sudo apt install g++-mingw-w64-x86-64
+ sudo update-alternatives --config x86_64-w64-mingw32-g++
+1 누르고 Enter
+
+===== 이름 바꾸기 =====
+find ./ -type f -readable -writable -exec sed -i "s/Litecoin/Aguhcoin/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/LiteCoin/AguhCoin/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/litecoin/aguhcoin/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/Litecoind/Aguhcoind/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/litecoind/aguhcoind/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/LITECOIN/AGUHCOIN/g" {} \;
+
+
+===== 단위 바꾸기 =====
+find ./ -type f -readable -writable -exec sed -i "s/LTC/AGC/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/lites/aguhs/g" {} \;
+find ./ -type f -readable -writable -exec sed -i "s/photons/aphotons/g" {} \;
+
+
+======  포트 변경하기 =====
+find ./ -type f -print0 | xargs -0 sed -i "s/9333/9233/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/9332/9232/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/19335/19235/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/19332/19232/g"
+
+===== /src/chainparams.cpp 코드 수정 =====
+
+
+code .
+
+
+
+vscode가 열리면
+
+
+
+/src/chainparams.cpp 의
+
+
+
+Line 114-117  수정  (기존 값에서 2씩 더해주면 됩니다.)
+
+/*          변경 전                               변경 후           */
+/*114   pchMessageStart[0] = 0xfb;*/        pchMessageStart[0] = 0xfd;
+/*115   pchMessageStart[1] = 0xc0;*/        pchMessageStart[1] = 0xc2;
+/*116   pchMessageStart[2] = 0xb6;*/        pchMessageStart[2] = 0xb8;
+/*117   pchMessageStart[3] = 0xdb;*/        pchMessageStart[3] = 0xdd;
+Line 216-219 수정
+
+/*          변경 전                               변경 후           */
+/*216  pchMessageStart[0] = 0xfd;*/  	pchMessageStart[0] = 0xff;
+/*217  pchMessageStart[1] = 0xd2;*/ 	pchMessageStart[1] = 0xd4;
+/*218  pchMessageStart[2] = 0xc8;*/ 	pchMessageStart[2] = 0xca;
+/*219  pchMessageStart[3] = 0xf1;*/ 	pchMessageStart[3] = 0xf3;
+Line 135 수정
+
+https://en.bitcoin.it/wiki/List_of_address_prefixes
+
+위 링크 참고.
+
+이 짓을 하는 이유는 아래와 같습니다.
+
+블록체인 기반 통화는 Bech32 인코딩을 제외하고 Base58Check 인코딩에 있는 인코딩된 문자열을 사용합니다. 인코딩에는 인코딩된 결과의 선행 기호에 영향을 주는 접두사(일반적으로 단일 버전 바이트)가 포함됩니다.
+aguhcoin의 선행기호 a.  (각자에게 적합한 문자를 찾으면 됩니다.)
+
+aguhcoin이라 a를 찾음.    (a =>83)
+---------------------------
+82       Z or a       34
+83       a            34
+84       a or b       34
+---------------------------
+
+벡터의 두 번째 인자를 위에서 찾은 값으로 바꿔줍니다. (83으로 초기화.)
+
+
+
+//135번째 줄
+base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,83);
+(이렇게 바꿔주면 나중에 코인에서 주소를 생성할 때. 주소 맨 앞자리가 a로 시작하게 됩니다)
+
+===== /src/consensus/consensus.h 코드 수정 =====
+Line 19 값 수정
+최초 상태에서는 블록이 100개 이상 쌓여야 코인을 사용할 수 있는데. 그러면 테스트할 떄 블록을 생성하는 데에 시간이 많이 소요됩니다. 그러므로 이 값을 바꿔주겠습니다.
+static const int COINBASE_MATURITY=5;
+
+=====제네시스 블록 정보 생성 =====  (파이선3 으로 작업)
+
+cd ..                    (workspace로 이동)
+git clone https://github.com/lhartikk/GenesisH0
+cd GenesisH0
+git pull origin pull/48/head
+ls -al
+genesis.py 가 존재하는지 확인합니다.
+sudo apt-get install python3-pip
+sudo pip3 install scrypt construct==2.5.2
+python3 genesis.py -a scrypt -z "hello Aguhcoin" -p "040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9" -t 1678854582 -n 2084524493

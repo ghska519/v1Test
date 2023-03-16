@@ -159,3 +159,23 @@
     server=1
     daemon=1
     maxconnections=24  //차차 알아보고 설정하자
+    코인 보내기
+    litecoin-cli -testnet sendtoaddress mpQA36uSXDGxySjknqHFVMdsLPgPnbm7ku 0.1
+    5a872819262d660bce9b96e36b3703f86fe56a0f6b2c087e000f49d0afcc265c
+    반환받은 texid로 상세 거래내역 및 컴펌수를 확인할수 있다
+    litecoin-cli -testnet getrawtransaction 5a872819262d660bce9b96e36b3703f86fe56a0f6b2c087e000f49d0afcc265c 1
+
+
+
+root@lhn-virtual-machine:/home/lhn/workspace/GenesisH0# python3 genesis.py -a scrypt -z "NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56" -p "040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9" -t 1678854302 -n 2084524493
+04ffff001d0104404e592054696d65732030352f4f63742f32303131205374657665204a6f62732c204170706c65e280997320566973696f6e6172792c2044696573206174203536
+algorithm: scrypt
+merkle hash: 97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9
+pszTimestamp: NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56
+pubkey: 040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9
+time: 1678854302
+bits: 0x1e0ffff0
+Searching for genesis hash..
+7670 hash/s, estimate: 155.5 hgenesis hash found!
+nonce: 2085621075
+genesis hash: 29ebea61fbc5aec9e52a906235450e115d08b622c9d52b75f5ae50701969d8e4
