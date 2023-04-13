@@ -1,6 +1,6 @@
 <?php
 /*
-EasyBitcoin-PHP
+EasyBitcoin-PHP   
 A simple class for making calls to Bitcoin's API using PHP.
 https://github.com/aceat64/EasyBitcoin-PHP
 ====================
