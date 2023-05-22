@@ -1,6 +1,6 @@
 apt-get install apache2
 apt-get install mysql-server
-add-apt-repository ppa:ondrej/php 
+add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get install php5.6 php5.6-common
 apt-get install php5.6-mysql php5.6-curl php5.6-xml php5.6-zip php5.6-gd php5.6-mbstring php5.6-mcrypt php5.6-redis
@@ -12,6 +12,18 @@ systemctl enable mysql.service (autostart 등록)
 
 
 apt-get install redis-server
+
+redis pid yet? 오류 나올떄 아래 쏘스 실행
+        nano /etc/systemd/system/redis.service
+
+        ExecStop=/bin/kill -s TERM $MAINPID
+        Add a new lineExecStartPost=/bin/sh -c "echo $MAINPID > /var/run/redis/redis.pid" in [Service]
+
+        sudo systemctl daemon-reload
+        sudo systemctl enable redis-server
+        sudo systemctl restart redis.service
+
+
 vmstat -s (총메모리 사이즈 확인)
 /etc/redis/redis.conf --> 파일내용중 maxmemory: redis(최대메모리지정), maxmemory-policy allkeys-lru (메모리초과시 대응방법:오래된 기존메모리부터 삭제)
 systemctl enable redis-server.service (autostart 등록)
