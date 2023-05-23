@@ -1,53 +1,91 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <style>
+    .draggable-image {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
 </head>
 <body>
-<script type='text/javascript'>
-var img_L = 0;
-var img_T = 0;
-var targetObj;
+  <div id="image-container">
+    <img id="draggable-image" class="draggable-image" src="https://m.pay-da.co.kr/public/front/img/4x3/kr.svg" />
+    <img id="target-image-1" class="draggable-image" src="https://m.pay-da.co.kr/public/front/img/4x3/us.svg" data-value="42" />
+    <img id="target-image-2" class="draggable-image" src="https://m.pay-da.co.kr/public/front/img/4x3/cn.svg" data-value="15" />
+  </div>
 
-function getLeft(o){
-     return parseInt(o.style.left.replace('px', ''));
-}
-function getTop(o){
-     return parseInt(o.style.top.replace('px', ''));
-}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var draggableImage = document.getElementById('draggable-image');
+      var targetImage1 = document.getElementById('target-image-1');
+      var targetImage2 = document.getElementById('target-image-2');
 
-// 이미지 움직이기
-function moveDrag(e){
-     var e_obj = window.event? window.event : e;
-     console.log(e_obj);
-     var dmvx = parseInt(e_obj.clientX + img_L);
-     var dmvy = parseInt(e_obj.clientY + img_T);
-     targetObj.style.left = dmvx +"px";
-     targetObj.style.top = dmvy +"px";
-     return false;
-}
+      var isDragging = false;
+      var initialX;
+      var initialY;
 
-// 드래그 시작
-function startDrag(e, obj){
-     targetObj = obj;
-     var e_obj = window.event? window.event : e;
-     img_L = getLeft(obj) - e_obj.clientX;
-     img_T = getTop(obj) - e_obj.clientY;
+      draggableImage.style.left = getRandomPosition(0, window.innerWidth - draggableImage.offsetWidth) + 'px';
+      draggableImage.style.top = getRandomPosition(0, window.innerHeight - draggableImage.offsetHeight) + 'px';
 
-     document.onmousemove = moveDrag;
-     document.onmouseup = stopDrag;
-     if(e_obj.preventDefault)e_obj.preventDefault();
-}
+      targetImage1.style.left = getRandomPosition(0, window.innerWidth - targetImage1.offsetWidth) + 'px';
+      targetImage1.style.top = getRandomPosition(0, window.innerHeight - targetImage1.offsetHeight) + 'px';
 
-// 드래그 멈추기
-function stopDrag(){
-     document.onmousemove = null;
-     document.onmouseup = null;
-}
-</script>
+      targetImage2.style.left = getRandomPosition(0, window.innerWidth - targetImage2.offsetWidth) + 'px';
+      targetImage2.style.top = getRandomPosition(0, window.innerHeight - targetImage2.offsetHeight) + 'px';
+
+      draggableImage.addEventListener('touchstart', function(event) {
+        isDragging = true;
+        initialX = event.touches[0].clientX - draggableImage.offsetLeft;
+        initialY = event.touches[0].clientY - draggableImage.offsetTop;
+      });
+
+      document.addEventListener('touchmove', function(event) {
+        if (isDragging) {
+          event.preventDefault();
+          var x = event.touches[0].clientX - initialX;
+          var y = event.touches[0].clientY - initialY;
+          draggableImage.style.left = x + 'px';
+          draggableImage.style.top = y + 'px';
+
+          // 충돌 감지
+          if (targetImage1.getAttribute('data-value') && checkCollision(draggableImage, targetImage1)) {
+            handleCollision(draggableImage, targetImage1);
+            targetImage1.removeAttribute('data-value');
+          }
+
+          if (targetImage2.getAttribute('data-value') && checkCollision(draggableImage, targetImage2)) {
+            handleCollision(draggableImage, targetImage2);
+            targetImage2.removeAttribute('data-value');
+          }
+        }
+      },{ passive: false });
+
+      document.addEventListener('touchend', function() {
+        isDragging = false;
+      });
+
+      function checkCollision(image1, image2) {
+        var image1Rect = image1.getBoundingClientRect();
+        var image2Rect = image2.getBoundingClientRect();
+
+        return (
+          image1Rect.left < image2Rect.right &&
+          image1Rect.right > image2Rect.left &&
+          image1Rect.top < image2Rect.bottom &&
+          image1Rect.bottom > image2Rect.top
+        );
+      }
+
+      function handleCollision(draggableImage, targetImage) {
+        console.log('Collision detected between draggable image and target image:', draggableImage.id, targetImage.id);
+      }
+
+      function getRandomPosition(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+    });
+  </script>
 </body>
-<div style='position:absolute; left:0px; top:0px; cursor:pointer; cursor:hand' onmousedown='startDrag(event, this)'>
-    <table bgcolor="#0000FF"><tr><td>
-        <font color="#FFFFFF">하하하</font>
-    </td></tr></table>
-</div>
-<img src="http://www.horangi.kr/miniapp/doumi/img/ttokki.gif" width="150" style="position:absolute; left:0px; top:50px; cursor:pointer; cursor:hand" onmousedown="startDrag(event, this)" border="0">
 </html>
