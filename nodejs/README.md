@@ -28,4 +28,6 @@ node-api폴더에서 pm2 start --name "앱이름" npm -- start
 
 해당폴더에서
 
-npm install 을 실행한다 
+npm install 을 실행한다
+
+redis 를 사용할때 3.1.2 버전 사용할것 Ci와 통신잘됨 
