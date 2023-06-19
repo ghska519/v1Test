@@ -1,7 +1,7 @@
 <?php
 // 이미지가 업로드될 폴더의 전체 경로입니다.
 // 여기서는 구현을 간단히 하기 위해서 웹 루트 안에 업로드합니다.
-$uploadfullPath = "D:/workspace/workspace_jee/project_PHP/application/editor/images/";
+$uploadfullPath = "/var/www/website/public/upload/notice/";
 
 // 이미지가 웹에서 보여질때 사용되어질 기본 URL입니다.
 // 웹루트 부터의 절대 URL을 입력합니다.
@@ -28,13 +28,13 @@ $message = '';
 if (isset($_FILES['upload'])) {
 
     $name = $_FILES['upload']['name'];
-    
+
     // 파일 이름 중복 체크는 없습니다.(실제 구현에는 직접 작성해야 할 것입니다.)
     move_uploaded_file($_FILES["upload"]["tmp_name"], $uploadfullPath . $name);
-    
+
     // 업로드후 이미지를 보여줄 URL 을 만듭니다.
     $url = $imageBaseUrl . $name ;
-    
+
 } else {
     $message = '업로드된 파일이 없습니다.';
 }
