@@ -67,6 +67,7 @@ sudo dpkg -i mysql-apt-config_0.8.12-1_all.deb
 >> Ok
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29
+여기키값을 보통 틀리게 된다 틀리게 되면 정확한 키값을 로그로 찍어 주니 그걸 입력 하면 된다
 apt-get update
 
 sudo apt update
