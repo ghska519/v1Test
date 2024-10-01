@@ -43,3 +43,50 @@ apt-get install phpmyadmin
 Include /etc/phpmyadmin/apache.conf
 변경된 설정을 적용하기 위해서 다음처럼 아파치 서버를 재시작합니다.
 $ /etc/init.d/apache2 restart
+
+우분투 22.04 LTS 에서 MySQL 5.7 설치
+
+https://dev.mysql.com/downloads/repo/apt/
+해당 주소에서 파일명을 확인한다
+
+파일을 다운로드
+sudo wget https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
+deb 설치
+sudo dpkg -i mysql-apt-config_0.8.12-1_all.deb
+
+# 1. Add repository to unsupported system?
+>> ubuntu bionic
+
+# 2. Which MySQL product do you wish to configure?
+>> MySQL Server & Cluster
+
+# 3. Which server version do you wish to receive?
+>> mysql-5.7
+
+# 4. Which MySQL product do you wish to configure?
+>> Ok
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29
+apt-get update
+
+sudo apt update
+
+sudo apt policy mysql-server
+
+mysql-server:
+  설치: 5.7.39-1ubuntu18.04
+  후보: 8.0.30-0ubuntu0.22.04.1
+  버전 테이블:
+     8.0.30-0ubuntu0.22.04.1 500
+        500 http://kr.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages
+        500 http://kr.archive.ubuntu.com/ubuntu jammy-updates/main i386 Packages
+        500 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages
+     8.0.28-0ubuntu4 500
+        500 http://kr.archive.ubuntu.com/ubuntu jammy/main amd64 Packages
+        500 http://kr.archive.ubuntu.com/ubuntu jammy/main i386 Packages
+ *** 5.7.39-1ubuntu18.04 500
+        500 http://repo.mysql.com/apt/ubuntu bionic/mysql-5.7 amd64 Packages
+        100 /var/lib/dpkg/status
+
+sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*
